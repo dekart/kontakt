@@ -34,11 +34,9 @@ Sample config file:
     development:
       app_id: ...
       app_secret: ...
-      namespace: your-app-namespace
-      callback_domain: yourdomain.com
+      api_version: 5.52
 
     test:
       app_id: ...
       app_secret: ...
-      namespace: test
-      callback_domain: callback.url
+      api_version: 5.52

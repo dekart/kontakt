@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.files = [
     "LICENSE"
   ]
-  s.homepage = "http://github.com/HeyJimmy/kontakt"
+  s.homepage = "http://github.com/heyjimmy/kontakt"
   s.rubygems_version = "2.2.2"
   s.summary = "Vkontakte api for Rails applications"
 

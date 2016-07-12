@@ -20,7 +20,7 @@ begin
     gem.name = 'kontakt'
     gem.summary = "Vkontakte api for Rails applications"
     gem.email = "ahmadeeva.ou@gmail.com"
-    gem.homepage = "http://github.com/HeyJimmy/kontakt"
+    gem.homepage = "http://github.com/heyjimmy/kontakt"
     gem.authors = ["Olga Velina"]
     gem.version = '0.1'
 
