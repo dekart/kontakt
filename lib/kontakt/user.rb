@@ -14,7 +14,7 @@ module Kontakt
       end
 
       def decrypt(config, encrypted_params)
-        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{config.app_secret}")
+        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{config.app_id}_#{config.app_secret}")
 
         encryptor.decrypt_and_verify(encrypted_params)
       rescue ActiveSupport::MessageEncryptor::InvalidMessage, ActiveSupport::MessageVerifier::InvalidSignature
@@ -24,10 +24,10 @@ module Kontakt
       end
 
       def signature_valid?(config, params)
-        params['auth_key'].blank? && params['auth_key'] == auth_key(config, params)
+        !params['auth_key'].blank? && params['auth_key'] == auth_key(config, params)
       end
 
-      def auth_key(config, params) # bingo!
+      def auth_key(config, params)
         Digest::MD5.hexdigest(
           [config.app_id, params['viewer_id'], config.app_secret].join('_')
         )
@@ -43,14 +43,14 @@ module Kontakt
     end
 
     def uid
-      @options['viewer_id']
+      @options['viewer_id'].to_i
     end
 
-    def sid
+    def session_key
       @options['sid']
     end
 
-    def secret
+    def session_secret_key
       @options['secret']
     end
 
@@ -64,7 +64,7 @@ module Kontakt
 
     # Vkontakte API client instantiated with user's session key
     def api_client
-      @api_client ||= Kontakt::Api::Client.new(sid, secret)
+      @api_client ||= Kontakt::Api::Client.new(session_key, session_secret_key)
     end
   end
 end

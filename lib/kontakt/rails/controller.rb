@@ -25,7 +25,8 @@ module Kontakt
       protected
 
       KONTAKT_PARAM_NAMES = %w{api_url api_id user_id sid secret group_id viewer_id viewer_type is_app_user is_secure
-        auth_key language parent_language api_result api_settings referrer access_token hash lc_name ad_info}
+        auth_key language parent_language api_result api_settings referrer access_token hash lc_name
+        ad_info ads_app_id}
 
       RAILS_PARAMS = %w{controller action}
 
@@ -37,7 +38,7 @@ module Kontakt
 
       # A hash of params passed to this action, excluding secure information passed by Vkontakte
       def params_without_vk_data
-        params.except(*(KONTAKT_PARAM_NAMES))
+        params.except(*KONTAKT_PARAM_NAMES)
       end
 
       # params coming directly from Vkontakte
@@ -71,13 +72,13 @@ module Kontakt
       end
 
       def encrypt(params)
-        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_secret}")
+        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
 
         encryptor.encrypt_and_sign(params)
       end
 
       def decrypt(encrypted_params)
-        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_secret}")
+        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
 
         encryptor.decrypt_and_verify(encrypted_params)
       rescue ActiveSupport::MessageEncryptor::InvalidMessage, ActiveSupport::MessageVerifier::InvalidSignature
