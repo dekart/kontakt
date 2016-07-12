@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+bundle exec rake gemspec:generate build
+cd pkg
+gem uninstall kontakt
+gem install --local kontakt
+cd ..

@@ -1,0 +1,51 @@
+module Kontakt
+  module Rails
+    module Helpers
+      module JavascriptHelper
+
+        # A helper to integrate Vkontakte JS Api to the current page. Generates a
+        # JavaScript code that initializes Javascript client for the current application.
+        #
+        # @param &block   A block of JS code to be inserted in addition to client initialization code.
+        def vk_connect_js(&block)
+          extra_js = capture(&block) if block_given?
+
+          init_js = <<-JAVASCRIPT
+            VK.init(
+              function() {
+                #{extra_js}
+              },
+              function(error) {
+                console.log('Error initializing VK');
+                console.log(error);
+              },
+              '5.52'
+            );
+          JAVASCRIPT
+
+          js_url = "//vk.com/js/api/xd_connection.js?2"
+
+          js = <<-CODE
+            <script src="#{ js_url }" type="text/javascript"></script>
+          CODE
+
+          js << <<-CODE
+            <script type="text/javascript">
+              if(typeof VK !== 'undefined') {
+                #{init_js}
+              }
+            </script>
+          CODE
+
+          js = js.html_safe
+
+          if block_given? && ::Rails::VERSION::STRING.to_i < 3
+            concat(js)
+          else
+            js
+          end
+        end
+      end
+    end
+  end
+end
