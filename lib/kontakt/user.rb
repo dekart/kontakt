@@ -39,7 +39,7 @@ module Kontakt
     end
 
     def authenticated?
-      !sid.blank?
+      !session_key.blank?
     end
 
     def uid
