@@ -12,7 +12,7 @@ module Kontakt
       end
 
       def error?
-        body.is_a?(Hash) && body['error_code'].present?
+        body.is_a?(Hash) && body['error'].present?
       end
     end
 
@@ -51,11 +51,6 @@ module Kontakt
       protected
 
       def make_request(method, specific_params)
-        puts "~~ make_request ~~"
-        puts method
-        puts specific_params
-        puts "~~~~~~~~"
-
         Faraday.new(REST_API_URL + method).get do |request|
           request.params = signed_call_params(method, specific_params)
         end
@@ -69,9 +64,6 @@ module Kontakt
         params.merge!(:v => Kontakt::Config.default.api_version) unless Kontakt::Config.default.api_version.nil?
         params.merge!(:access_token => access_token) if access_token
 
-        puts "~~ signed_call_params ~~"
-        puts params
-        puts "~~~~~~~~"
         params
       end
     end

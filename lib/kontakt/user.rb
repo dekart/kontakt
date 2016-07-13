@@ -6,12 +6,7 @@ module Kontakt
     class << self
       # Creates an instance of Kontakt::User using application config and request parameters
       def from_vk_params(config, params)
-        puts "~~ from_vk_params ~~"
-        puts params
-        puts "decrypted:"
         params = decrypt(config, params) if params.is_a?(String)
-        puts params
-        puts "~~~~~~~~~~"
 
         return unless params && params['viewer_id'] && signature_valid?(config, params)
 
