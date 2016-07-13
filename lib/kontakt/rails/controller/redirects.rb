@@ -12,7 +12,7 @@ module Kontakt
 
         # Overrides ActionController::Base#redirect_to to pass signed_params in flash[]
         def redirect_to_with_signed_params(*args)
-          flash[:signed_params] = vk_signed_params
+          flash[:signed_params] = vk_signed_params if vk_canvas?
 
           redirect_to_without_signed_params(*args)
         end

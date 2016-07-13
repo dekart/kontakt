@@ -28,11 +28,10 @@ module Kontakt
     class Client
       REST_API_URL = "https://api.vk.com/method"
 
-      attr_accessor :sid, :secret
+      attr_accessor :access_token
 
-      def initialize(sid, secret)
-        self.sid = sid
-        self.secret = secret
+      def initialize(access_token = nil)
+        self.access_token = access_token
       end
 
       def call(method, specific_params = {})
@@ -53,14 +52,16 @@ module Kontakt
         params = specific_params.symbolize_keys
 
         params.merge!(:api_version => Kontakt::Config.default.api_version) unless Kontakt::Config.default.api_version.nil?
+        params.merge!(:access_token => access_token) if access_token
 
+        puts "~~ signed_call_params ~~"
+        puts params
+        puts "~~~~~~~~"
         params
         #params = {
         #  :method          => method,
         #  :format          => 'json'
         #}.merge(specific_params.symbolize_keys)
-
-        #params.merge!(:sid => sid) if sid
       end
 
       protected
@@ -75,6 +76,12 @@ module Kontakt
 
       def make_request(method, specific_params)
         method_name = specific_params.delete(:method_name)
+
+        puts "~~ make_request ~~"
+        puts method
+        puts method_name
+        puts specific_params
+        puts "~~~~~~~~"
 
         connection(token).send(
           method, method_name, signed_call_params(method, specific_params)

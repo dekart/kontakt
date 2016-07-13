@@ -39,32 +39,32 @@ module Kontakt
     end
 
     def authenticated?
-      !session_key.blank?
+      access_token && !access_token.empty?
     end
 
     def uid
       @options['viewer_id'].to_i
     end
 
-    def session_key
+    def access_token
+      @options['access_token']
+    end
+
+    def session_key # unused
       @options['sid']
     end
 
-    def session_secret_key
+    def session_secret_key # unused
       @options['secret']
-    end
-
-    def access_token
-      @options['access_token']
     end
 
     def referrer
       @options['referrer']
     end
 
-    # Vkontakte API client instantiated with user's session key
+    # Vkontakte API client instantiated with user's access token
     def api_client
-      @api_client ||= Kontakt::Api::Client.new(session_key, session_secret_key)
+      @api_client ||= Kontakt::Api::Client.new(access_token)
     end
   end
 end

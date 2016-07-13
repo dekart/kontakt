@@ -40,13 +40,13 @@ module Kontakt
       "#{ protocol }www.vk.com/app#{ app_id }"
     end
 
+    def api_client
+      Kontakt::Api::Client.new(nil)
+    end
+
     # Application callback URL
     #def callback_url(protocol)
     #  protocol + callback_domain
     #end
-
-    def api_client
-      Kontakt::Api::Client.new(nil, nil)
-    end
   end
 end
