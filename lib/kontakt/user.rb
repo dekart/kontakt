@@ -8,8 +8,10 @@ module Kontakt
       def from_vk_params(config, params)
         puts "~~ from_vk_params ~~"
         puts params
-        puts "~~~~~~~~~~"
+        puts "decrypted:"
         params = decrypt(config, params) if params.is_a?(String)
+        puts params
+        puts "~~~~~~~~~~"
 
         return unless params && params['viewer_id'] && signature_valid?(config, params)
 
@@ -53,11 +55,11 @@ module Kontakt
       @options['access_token']
     end
 
-    def session_key # unused
+    def sid
       @options['sid']
     end
 
-    def session_secret_key # unused
+    def secret
       @options['secret']
     end
 

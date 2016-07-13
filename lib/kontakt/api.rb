@@ -26,7 +26,7 @@ module Kontakt
     end
 
     class Client
-      REST_API_URL = "https://api.vk.com/method"
+      REST_API_URL = "https://api.vk.com/method/"
 
       attr_accessor :access_token
 
@@ -48,51 +48,32 @@ module Kontakt
         Kontakt::Api::Response.new(result.status.to_i, body, result.headers)
       end
 
+      protected
+
+      def make_request(method, specific_params)
+        puts "~~ make_request ~~"
+        puts method
+        puts specific_params
+        puts "~~~~~~~~"
+
+        Faraday.new(REST_API_URL + method).get do |request|
+          request.params = signed_call_params(method, specific_params)
+        end
+      rescue Exception => e
+        ::Rails.logger.error("Exception: #{e.inspect}")
+      end
+
       def signed_call_params(method, specific_params = {})
         params = specific_params.symbolize_keys
 
-        params.merge!(:api_version => Kontakt::Config.default.api_version) unless Kontakt::Config.default.api_version.nil?
+        params.merge!(:v => Kontakt::Config.default.api_version) unless Kontakt::Config.default.api_version.nil?
         params.merge!(:access_token => access_token) if access_token
 
         puts "~~ signed_call_params ~~"
         puts params
         puts "~~~~~~~~"
         params
-        #params = {
-        #  :method          => method,
-        #  :format          => 'json'
-        #}.merge(specific_params.symbolize_keys)
       end
-
-      protected
-
-      def connection(token)
-        Faraday.new(REST_API_URL) do |connect|
-          connect.request :oath2, token unless token.nil?
-          connect.request :multipart
-          connect.request :url_encoded
-        end
-      end
-
-      def make_request(method, specific_params)
-        method_name = specific_params.delete(:method_name)
-
-        puts "~~ make_request ~~"
-        puts method
-        puts method_name
-        puts specific_params
-        puts "~~~~~~~~"
-
-        connection(token).send(
-          method, method_name, signed_call_params(method, specific_params)
-        )
-        #connection(token).get do |request|
-        #  request.params = signed_call_params(method, specific_params)
-        #end
-      rescue Exception => e
-        ::Rails.logger.error("Exception: #{e.inspect}")
-      end
-
     end
   end
 end
