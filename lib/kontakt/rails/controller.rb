@@ -48,7 +48,7 @@ module Kontakt
 
       # encrypted vkontakte params
       def vk_signed_params
-        if vk_params['sid'].present?
+        if vk_params['access_token'].present?
           encrypt(vk_params)
         else
           request.env["HTTP_SIGNED_PARAMS"] || request.params['signed_params'] || flash[:signed_params]
@@ -62,13 +62,13 @@ module Kontakt
 
       # Did the request come from canvas app
       def vk_canvas?
-        vk_params['sid'].present? || request.env['HTTP_SIGNED_PARAMS'].present? || flash[:signed_params].present?
+        vk_params['access_token'].present? || request.env['HTTP_SIGNED_PARAMS'].present? || flash[:signed_params].present?
       end
 
       private
 
       def fetch_current_vk_user
-        Kontakt::User.from_vk_params(kontakt, vk_params['sid'].present? ? vk_params : vk_signed_params)
+        Kontakt::User.from_vk_params(kontakt, vk_params['access_token'].present? ? vk_params : vk_signed_params)
       end
 
       def encrypt(params)
