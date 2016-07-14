@@ -27,7 +27,7 @@ module Kontakt
     end
 
     # Defining methods for quick access to config values
-    %w{app_id app_secret api_version}.each do |attribute|
+    %w{app_id app_secret api_version namespace callback_domain}.each do |attribute|
       class_eval %{
         def #{ attribute }
           config[:#{ attribute }]
@@ -38,6 +38,11 @@ module Kontakt
     # URL of the application canvas page
     def canvas_page_url(protocol)
       "#{ protocol }www.vk.com/app#{ app_id }"
+    end
+
+    # Application callback URL
+    def callback_url(protocol)
+      protocol + callback_domain
     end
 
     def oauth_client
@@ -52,10 +57,5 @@ module Kontakt
     def app_access_token
       @app_access_token ||= oauth_client.get_app_access_token(config)
     end
-
-    # Application callback URL
-    #def callback_url(protocol)
-    #  protocol + callback_domain
-    #end
   end
 end

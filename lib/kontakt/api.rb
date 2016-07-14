@@ -20,8 +20,8 @@ module Kontakt
       attr_accessor :vk_error_type
 
       def initialize(details = {})
-        self.vk_error_type = details["type"]
-        super("#{vk_error_type}: #{details["message"]}")
+        self.vk_error_type = details["error_code"]
+        super("#{vk_error_type}: #{details["error_msg"]}")
       end
     end
 
