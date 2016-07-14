@@ -49,7 +49,7 @@ module Kontakt
       # encrypted vkontakte params
       def vk_signed_params
         if vk_params['access_token'].present?
-          encrypt(vk_params)
+          encrypt_params(vk_params)
         else
           request.env["HTTP_SIGNED_PARAMS"] || request.params['signed_params'] || flash[:signed_params]
         end
@@ -71,13 +71,13 @@ module Kontakt
         Kontakt::User.from_vk_params(kontakt, vk_params['access_token'].present? ? vk_params : vk_signed_params)
       end
 
-      def encrypt(params)
+      def encrypt_params(params)
         encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
 
         encryptor.encrypt_and_sign(params)
       end
 
-      def decrypt(encrypted_params)
+      def decrypt_params(encrypted_params)
         encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
 
         encryptor.decrypt_and_verify(encrypted_params)
