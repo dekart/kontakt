@@ -40,8 +40,17 @@ module Kontakt
       "#{ protocol }www.vk.com/app#{ app_id }"
     end
 
+    def oauth_client
+      @oauth_client ||= Kontakt::Api::Client.new(nil)
+    end
+
     def api_client
-      Kontakt::Api::Client.new(nil)
+      Kontakt::Api::Client.new(app_access_token)
+    end
+
+    # Fetches application access token
+    def app_access_token
+      @app_access_token ||= @oauth_client.make_oauth_request(config)
     end
 
     # Application callback URL
