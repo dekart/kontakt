@@ -92,7 +92,8 @@ module Kontakt
         params = specific_params.symbolize_keys
 
         params.merge!(:v => Kontakt::Config.default.api_version) unless Kontakt::Config.default.api_version.nil?
-        params.merge!(:access_token => access_token) if access_token
+        params.merge!(:access_token  => access_token) if access_token
+        params.merge!(:client_secret => Kontakt::Config.default.app_secret) if method.split('.').first == 'secure'
 
         params
       end
