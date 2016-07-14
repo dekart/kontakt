@@ -45,12 +45,12 @@ module Kontakt
     end
 
     def api_client
-      Kontakt::Api::Client.new(app_access_token)
+      @api_client ||= Kontakt::Api::Client.new(app_access_token)
     end
 
     # Fetches application access token
     def app_access_token
-      @app_access_token ||= @oauth_client.get_app_access_token(config)
+      @app_access_token ||= oauth_client.get_app_access_token(config)
     end
 
     # Application callback URL
