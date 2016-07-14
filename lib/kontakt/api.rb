@@ -74,11 +74,13 @@ module Kontakt
       end
 
       def make_oauth_request(params)
+        params.symbolize_keys!
+
         Faraday.new(OAUTH_URL).get do |request|
           request.params = {
-            :client_id     => params.app_id,
-            :client_secret => params.app_secret,
-            :v             => params.api_version,
+            :client_id     => params[:app_id],
+            :client_secret => params[:app_secret],
+            :v             => params[:api_version],
             :grant_type    => "client_credentials"
           }
         end

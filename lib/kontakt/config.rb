@@ -50,7 +50,7 @@ module Kontakt
 
     # Fetches application access token
     def app_access_token
-      @app_access_token ||= @oauth_client.make_oauth_request(config)
+      @app_access_token ||= @oauth_client.get_app_access_token(config)
     end
 
     # Application callback URL
