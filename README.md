@@ -1,7 +1,7 @@
 Kontakt
 ===========
 
-Provides a set of classes, methods, and helpers to ease development of vk.ru applications with Rails.
+Provides a set of classes, methods, and helpers to ease development of vk.com applications with Rails.
 
 Installation
 ------------
