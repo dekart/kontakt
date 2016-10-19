@@ -25,7 +25,7 @@ module Kontakt
       protected
 
       KONTAKT_PARAM_NAMES = %w{api_url api_id user_id sid secret group_id viewer_id viewer_type is_app_user is_secure
-        auth_key language parent_language api_result api_settings referrer access_token hash lc_name
+        auth_key language parent_language api_result api_settings access_token hash lc_name
         ad_info ads_app_id}
 
       RAILS_PARAMS = %w{controller action}
