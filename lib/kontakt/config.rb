@@ -27,7 +27,7 @@ module Kontakt
     end
 
     # Defining methods for quick access to config values
-    %w{app_id app_secret api_version namespace callback_domain}.each do |attribute|
+    %w{app_id app_secret service_token api_version namespace callback_domain}.each do |attribute|
       class_eval %{
         def #{ attribute }
           config[:#{ attribute }]
@@ -50,10 +50,11 @@ module Kontakt
     end
 
     def api_client
-      @api_client ||= Kontakt::Api::Client.new(app_access_token)
+      @api_client ||= Kontakt::Api::Client.new(service_token)
     end
 
     # Fetches application access token
+    # Deprecated after 01.04.2017: https://vk.com/dev/service_token
     def app_access_token
       @app_access_token ||= oauth_client.get_app_access_token(config)
     end
