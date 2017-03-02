@@ -49,12 +49,18 @@ module Kontakt
       @oauth_client ||= Kontakt::Api::Client.new(nil)
     end
 
+    # Client for open methods
     def api_client
       @api_client ||= Kontakt::Api::Client.new(service_token)
     end
 
-    # Fetches application access token
-    # Deprecated after 01.04.2017: https://vk.com/dev/service_token
+    # Client for secure methods
+    def secure_api_client
+      @secure_client ||= Kontakt::Api::Client.new(app_access_token)
+    end
+
+    # Fetches application access token needed for secure methods
+    # This token is bound to IP-address from which it was generated
     def app_access_token
       @app_access_token ||= oauth_client.get_app_access_token(config)
     end
