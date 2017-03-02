@@ -50,12 +50,12 @@ module Kontakt
     end
 
     # Client for open methods
-    def api_client
+    def open_api_client
       @api_client ||= Kontakt::Api::Client.new(service_token)
     end
 
     # Client for secure methods
-    def secure_api_client
+    def api_client
       @secure_client ||= Kontakt::Api::Client.new(app_access_token)
     end
 
