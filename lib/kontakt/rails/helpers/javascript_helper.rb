@@ -10,11 +10,11 @@ module Kontakt
           if vk_mobile?
             vk_mobile_connect_js(&block)
           else
-            vk_iframe_conect_js(&block)
+            vk_iframe_connect_js(&block)
           end
         end
 
-        def vk_iframe_conect_js(&block)
+        def vk_iframe_connect_js(&block)
           extra_js = capture(&block) if block_given?
 
           init_js = <<-JAVASCRIPT
