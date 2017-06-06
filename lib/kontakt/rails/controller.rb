@@ -15,7 +15,7 @@ module Kontakt
           before_filter :normal_cookies_for_ie_in_iframes!
 
           helper_method(:kontakt, :vk_params, :vk_signed_params, :params_without_vk_data,
-            :current_vk_user, :vk_canvas?
+            :current_vk_user, :vk_canvas?, :vk_mobile?
           )
 
           helper Kontakt::Rails::Helpers
@@ -26,7 +26,7 @@ module Kontakt
 
       KONTAKT_PARAM_NAMES = %w{api_url api_id user_id sid secret group_id viewer_id viewer_type is_app_user is_secure
         auth_key language parent_language api_result api_settings access_token hash lc_name
-        ad_info ads_app_id}
+        ad_info ads_app_id api_script}
 
       RAILS_PARAMS = %w{controller action}
 
@@ -63,6 +63,10 @@ module Kontakt
       # Did the request come from canvas app
       def vk_canvas?
         vk_params['access_token'].present? || request.env['HTTP_SIGNED_PARAMS'].present? || flash[:signed_params].present?
+      end
+
+      def vk_mobile?
+        params['vk_mobile'].present?
       end
 
       private
