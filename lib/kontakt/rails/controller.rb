@@ -66,7 +66,8 @@ module Kontakt
       end
 
       def vk_mobile?
-        params['vk_mobile'].present?
+        request.subdomain == 'vkmobile' ||
+          (Rails.env.development? && params['vk_mobile'].present?)
       end
 
       private
