@@ -69,9 +69,7 @@ module Kontakt
             );
           JAVASCRIPT
 
-          #js_url = "//vk.com/js/api/mobile_sdk.js"
-          # в mobile_sdk баг, так что загружаем исправленную версию из нашего проекта
-          js_url = "/mobile_sdk.js"
+          js_url = "//vk.com/js/api/mobile_sdk.js"
 
           js = <<-CODE
             <script src="#{ js_url }" type="text/javascript"></script>
