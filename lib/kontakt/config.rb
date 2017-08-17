@@ -37,7 +37,7 @@ module Kontakt
 
     # URL of the application canvas page
     def canvas_page_url(protocol)
-      "#{ protocol }www.vk.com/app#{ app_id }"
+      namespace.blank? ? "#{ protocol }vk.com/app#{ app_id }" : "#{ protocol }vk.com/#{ namespace }"
     end
 
     # Application callback URL
