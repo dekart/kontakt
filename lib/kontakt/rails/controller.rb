@@ -66,7 +66,7 @@ module Kontakt
       end
 
       def vk_mobile?
-        request.subdomain == 'vkmobile'
+        params[:platform] != "web"
       end
 
       private
