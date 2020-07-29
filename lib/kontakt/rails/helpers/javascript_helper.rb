@@ -26,7 +26,7 @@ module Kontakt
                 console.log('Error initializing VK');
                 console.log(error);
               },
-              '5.52'
+              '5.120'
             );
           JAVASCRIPT
 
@@ -65,7 +65,7 @@ module Kontakt
                 console.log('Error initializing VK');
                 console.log(error);
               },
-              '5.60'
+              '5.120'
             );
           JAVASCRIPT
 
