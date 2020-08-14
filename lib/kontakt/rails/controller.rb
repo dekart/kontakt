@@ -11,9 +11,6 @@ module Kontakt
           include Kontakt::Rails::Controller::UrlRewriting
           include Kontakt::Rails::Controller::Redirects
 
-          # Fix cookie permission issue in IE
-          before_filter :normal_cookies_for_ie_in_iframes!
-
           helper_method(:kontakt, :vk_params, :vk_signed_params, :params_without_vk_data,
             :current_vk_user, :vk_canvas?, :vk_mobile?
           )
