@@ -4,7 +4,8 @@ module Kontakt
       module Redirects
         def self.included(base)
           base.class_eval do
-            alias_method_chain :redirect_to, :signed_params
+            alias_method :redirect_to_without_signed_params, :redirect_to
+            alias_method :redirect_to, :redirect_to_with_signed_params
           end
         end
 
