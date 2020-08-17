@@ -14,7 +14,7 @@ module Kontakt
       end
 
       def decrypt(config, encrypted_params)
-        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{config.app_id}_#{config.app_secret}")
+        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{config.app_id}_#{config.app_secret}"[0..31])
 
         encryptor.decrypt_and_verify(encrypted_params)
       rescue ActiveSupport::MessageEncryptor::InvalidMessage, ActiveSupport::MessageVerifier::InvalidSignature

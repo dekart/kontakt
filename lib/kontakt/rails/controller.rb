@@ -73,13 +73,13 @@ module Kontakt
       end
 
       def encrypt_params(params)
-        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
+        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}"[0..31])
 
         encryptor.encrypt_and_sign(params)
       end
 
       def decrypt_params(encrypted_params)
-        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
+        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}"[0..31])
 
         encryptor.decrypt_and_verify(encrypted_params)
       rescue ActiveSupport::MessageEncryptor::InvalidMessage, ActiveSupport::MessageVerifier::InvalidSignature
