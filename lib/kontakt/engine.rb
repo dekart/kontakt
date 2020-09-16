@@ -1,7 +1,7 @@
 module Kontakt
   class Engine < ::Rails::Engine
     initializer "kontakt.middleware" do |app|
-      app.middleware.use(Kontakt::Middleware)
+      app.middleware.insert_before(Rack::Head, Kontakt::Middleware)
     end
 
     initializer "kontakt.controller_extension" do
