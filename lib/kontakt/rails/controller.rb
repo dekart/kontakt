@@ -11,9 +11,6 @@ module Kontakt
           include Kontakt::Rails::Controller::UrlRewriting
           include Kontakt::Rails::Controller::Redirects
 
-          # Fix cookie permission issue in IE
-          before_filter :normal_cookies_for_ie_in_iframes!
-
           helper_method(:kontakt, :vk_params, :vk_signed_params, :params_without_vk_data,
             :current_vk_user, :vk_canvas?, :vk_mobile?
           )
@@ -76,13 +73,17 @@ module Kontakt
       end
 
       def encrypt_params(params)
-        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
+        key = Digest::MD5.hexdigest("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
+
+        encryptor = ActiveSupport::MessageEncryptor.new(key)
 
         encryptor.encrypt_and_sign(params)
       end
 
       def decrypt_params(encrypted_params)
-        encryptor = ActiveSupport::MessageEncryptor.new("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
+        key = Digest::MD5.hexdigest("secret_key_#{kontakt.app_id}_#{kontakt.app_secret}")
+
+        encryptor = ActiveSupport::MessageEncryptor.new(key)
 
         encryptor.decrypt_and_verify(encrypted_params)
       rescue ActiveSupport::MessageEncryptor::InvalidMessage, ActiveSupport::MessageVerifier::InvalidSignature
