@@ -22,9 +22,7 @@ begin
     gem.email = "ahmadeeva.ou@gmail.com"
     gem.homepage = "http://github.com/heyjimmy/kontakt"
     gem.authors = ["Olga Velina"]
-    gem.version = '1.0.0'
-
-    gem.add_dependency "ie_iframe_cookies", '~> 0.1.2'
+    gem.version = '1.0.1'
   end
 
   Jeweler::GemcutterTasks.new
